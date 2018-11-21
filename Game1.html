@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+	<title>Let's play</title>
+	<style>
+			H1 { 
+			 font-size: 120%; 
+			 font-family: Verdana, Arial, Helvetica, sans-serif; 
+			 color: #333366; 
+			}
+
+			#userInput {
+				text-align: center;
+				width: 20 px;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+			}
+
+			#game {
+				background-color: rgb(140, 233, 233);
+				border-radius: 15px;
+				position: relative;
+				width: 600px;
+    		height: 350px;
+    		right: 0;
+    		bottom: 0;
+    		left: 0;
+    		margin: auto;
+    		text-align: center;
+			}
+
+			.selection {
+				float: left;
+			}
+
+			li {
+				list-style-type: none;
+				border-radius: 15px;
+				border-style: solid;
+				border-color: #ffffff;
+			}
+
+			button {
+				height: 50px;
+				width: 100px;
+				background-color: #c7d8ebc0;
+				border-radius: 12px;
+				border: 2px solid rgb(7, 70, 78);
+				text-align: center;
+				color:#120a42;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-size: 120%;
+				position: absolute;
+				left: 80%;
+				top: 40%;
+			}
+
+			button:hover {
+				background-color: rgb(0, 132, 141);
+				color: white;
+				border: 2px solid rgb(255, 255, 255);
+			}
+			
+			#result {
+				position: absolute;
+				display: inline-block;
+    		white-space: normal;
+    		vertical-align: middle;
+				text-align: center;
+				margin-top: 80%;
+				right: 10%;
+    		bottom: 5%;
+    		left: 10%;
+    		font-family: Verdana, Arial, Helvetica, sans-serif;
+			}
+
+			#bestresult {
+				position: absolute;
+				display: inline-block;
+    		white-space: normal;
+    		vertical-align: middle;
+				text-align: center;
+				margin-top: 40%;
+				right: 10%;
+				left: 10%;
+				bottom: 10%;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-size: 200%;
+				color:rgb(255, 0, 234);
+			}
+
+		 </style>
+</head>
+<body>
+<div id="game">
+	<div id="userInput">
+		<h1>Wanna play a bit?</h1>
+		<p>Make your choice!</p>
+		<ul>
+			<li class="selection" id="rock">
+					<img src="heavy-metal.png" alt="rock" onclick="playWith('rock')"/>
+			</li>
+			<li class="selection" id="paper">
+					<img src="paper-plane.png" alt="paper" onclick="playWith('paper')"/>
+			</li>
+			<li class="selection" id="scissors">
+					<img src="scissors.png" alt="scissors" onclick="playWith('scissors')"/>
+			</li>
+			</ul>
+		<button onclick="playGame()">Play</button>
+	</div><br>
+	<div id="bestresult"></div>
+	<div id="result"></div>
+</div>
+<script>
+	//Get user input	
+	var userOption = undefined;
+	function playWith(option){
+   // first, we deselect the previous selected element (if exist)
+   if (userOption != undefined){
+			userInputElement = document.getElementById(userOption);
+      // we remove the purple border (if exist)
+      userInputElement.style.border = "2px #ffffff solid";
+	 }
+	 		userOption = option;
+      userInputElement = document.getElementById(option);
+      userInputElement.style.border = "5px #DA2710 solid";
+	}							 
+		
+	//Get computer choice
+	function getComputerChoice() {
+	  let randomNumber = Math.floor(Math.random() * 3);  
+	  switch(randomNumber){
+		case 0:
+			return 'rock';
+		case 1:
+			return 'paper';
+		case 2:
+			return 'scissors'
+	  }
+	}
+	//Compare user input and computer choice
+	function determineWinner (userInput, computerChoice) {
+	  if (userInput == undefined) {
+			return 'Select a weapon and fight like a man!'
+		}
+		
+		if (userInput == computerChoice) {
+		return 'Tie!'
+	  }
+	  
+	  if  (userInput == 'rock'){
+		if (computerChoice == 'paper') {
+		  return 'The computer won!'
+		} else {
+		  return 'You won!';
+		}
+	  }
+	  if (userInput == 'paper'){
+		if (computerChoice == 'scissors'){
+		  return 'The computer won!'
+		} else {
+		  return 'You won!';
+		}
+	  }
+	  if (userInput == 'scissors'){
+		if (computerChoice == 'rock'){
+		  return 'The computer won!'
+		} else {
+		  return 'You won!';
+		}
+	  }
+	}
+	
+	//Displaying result
+	function playGame() {
+	  //const userChoice = getUserChoice();
+	  const computerChoice = getComputerChoice();
+		
+		resultMessage = determineWinner(userOption, computerChoice);
+		if (userOption == undefined) {
+			document.getElementById("bestresult").innerHTML = resultMessage;
+		} else {
+			document.getElementById("result").innerHTML = 
+          "<p>User select: " + userOption + "</p> <p>" + "Computer select: " 
+          + computerChoice + "</p> <p>" + resultMessage + "</p>";
+					document.getElementById("bestresult").innerHTML = "";
+		}                   
+          
+};
+  </script>
+  
+</div>  
+</body>
+
+</html>
+
